@@ -26,6 +26,9 @@ habilidades = [
 ]
 
 lista_2 = []
+
+diccio={}
+
 for item in habilidades:
     habilidad = item["Nombre"]
     numero = item["Poder"]
@@ -34,7 +37,11 @@ for item in habilidades:
     tupla=tuple([habilidad , numero])
     lista_2.append (tupla)
 
-    print(item)  
+    print(item)  #prueba
     #prueba
 print("-----------")    
-print(lista_2)
+print(lista_2)#prueba
+diccio['habilidades_UTN']=lista_2
+
+print("-----ABAJO RESULTADO FINAL------")  
+print(diccio)
