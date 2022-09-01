@@ -24,11 +24,17 @@ habilidades = [
         "Poder": 512
     }
 ]
-lista_nueva = []
+
+lista_2 = []
 for item in habilidades:
     habilidad = item["Nombre"]
     numero = item["Poder"]
-    lista_nueva.append (habilidad)
-    lista_nueva.append(numero)
-    print(item)
-print(lista_nueva)
+    
+   
+    tupla=tuple([habilidad , numero])
+    lista_2.append (tupla)
+
+    print(item)  
+    #prueba
+print("-----------")    
+print(lista_2)
