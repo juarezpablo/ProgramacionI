@@ -38,8 +38,8 @@ for item in habilidades:
     lista_2.append (tupla)
 
     print(item)  #prueba
-    #prueba
-print("-----------")    
+   
+print("-----------")     #prueba
 print(lista_2)#prueba
 diccio['habilidades_UTN']=lista_2
 
