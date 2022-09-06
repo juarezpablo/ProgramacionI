@@ -290,4 +290,3 @@ lista_heroes =\
   }
 ]
 
-print(lista_heroes)
