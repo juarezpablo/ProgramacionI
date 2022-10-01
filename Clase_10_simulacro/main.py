@@ -27,6 +27,7 @@ from validar import *
 def app_heroes():
     lista_heroes = cargar_json("C:/Users/Pablo/Desktop/ProgramacionI/Clase_10_simulacro/data_stark.json")
     lista_menu=["1)Listar los primeros N héroes.","2)Ordenar y Listar héroes por altura.","3)Ordenar y Listar héroes por fuerza.","4)Calcular promedio de cualquier key numérica, filtrar los que cumplan con la condición de superar o no el promedio","5)Buscar héroes por inteligencia [good, average, high]","6)Exportar a CSV la lista de héroes ordenada según opción elegida anteriormente [1-4]"]
+    nueva_lista = lista_heroes[:] 
     while True:
         imprimir_lista(lista_menu)
         respuesta = (input("\nElige una opcion\n"))
@@ -55,10 +56,10 @@ def app_heroes():
             imprimir_lista_mejorada(nueva_lista,"fuerza")
         if(respuesta == 4):
             print(lista_menu[3])
-            key=input("Elige la key numerica a promediar")
+            key=input("Elige la key numerica a promediar\n")
             promedio = calcular_promedio_key(nueva_lista,key)
             print("Promedio {0}".format(promedio))
-            comparador = input("Elegir listar valores que sean 'mayor' o 'menor' al promedio")
+            comparador = input("Elegir listar valores que sean 'mayor' o 'menor' al promedio\n")
             nueva_lista = listar_mayor_menor_key(nueva_lista,key,promedio,comparador)
             imprimir_lista_mejorada(nueva_lista,key)
         if(respuesta == 5):

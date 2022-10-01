@@ -142,7 +142,7 @@ def exportar_csv(lista:list,nombre:str):
     '''
     Crea un archivo csv de la lista recibida
 
-    Recibe una lista
+    Recibe una lista y la direccion donde se guarda el csv
     '''
     '''
     
@@ -156,6 +156,7 @@ def exportar_csv(lista:list,nombre:str):
     print(mensaje)
     x = re.findall("^[a-z]",mensaje)
     '''
+    
     with open(nombre,"w") as archivo:
         mensaje =""
         for item in lista:
