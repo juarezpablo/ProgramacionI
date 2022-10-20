@@ -42,12 +42,18 @@ def colicion(d_tablero,pos_xy):
     '''
     print(pos_xy)
     #print(d_tablero)
+    #bandera_segundo_click = 0
     lista_tarjetas = d_tablero["l_tarjetas"]
     for tarjeta in lista_tarjetas:
-        print(tarjeta)
+       # print(tarjeta)
         if tarjeta["rect"].collidepoint(pos_xy):
-            tarjeta["descubierto"]=True
-            tarjeta["visible"] = False
+            if tarjeta["visible"]==False:
+                tarjeta["visible"]=True
+            else:    
+                tarjeta["visible"] = False
+           
+           
+            
 
 def update(d_tablero,tiempo):
     '''
