@@ -26,33 +26,11 @@ class Tarjeta:
         self.rect.y=y    
     '''       
 
-    def cantidad_tarjetas_descubiertas(self,lista_tarjetas:list):
-        cantidad = 0
-        for tarjeta in lista_tarjetas:
-            if(tarjeta.descubierto):
-                cantidad += 1
-        return cantidad
+    
 
-    def cantidad_tarjetas_visibles_no_descubiertas(self):
-        cantidad = 0
-        for tarjeta in self:
-            if(tarjeta.visible and not tarjeta.descubierto):
-                cantidad += 1
-        return cantidad
+    
      
-    def match(self):
-        for index_p in range(len(self)):
-            if(self[index_p].visible and not self[index_p].descubierto):
-                aux_primer_tarjeta = self[index_p]
-                for index_s in range(index_p+1,len(self)):
-                    if(self[index_s].visible and not self[index_s].descubierto ):
-                        aux_segunda_tarjeta = self[index_s]
-                        if(aux_primer_tarjeta.path_imagen == aux_segunda_tarjeta.path_imagen):
-                            aux_primer_tarjeta.descubierto=True
-                            aux_segunda_tarjeta.descubierto=True
-                            return True
-        return False
-
+    
 
 
 

@@ -1,6 +1,6 @@
 import pygame
 from constantes import *
-import tablero
+#import tablero
 import tablero2
 
 pygame.init() #Se inicializa pygame
