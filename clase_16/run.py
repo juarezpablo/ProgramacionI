@@ -9,8 +9,8 @@ pygame.display.set_caption('The Simpsons Memotest')
 running = True
 #cuadrado = pygame.Rect(30, 30, 60, 60)
 #set tick timer 
-tick = pygame.USEREVENT
-pygame.time.set_timer(tick,1000)
+tick_3seg = pygame.USEREVENT
+pygame.time.set_timer(tick_3seg,3000)
 
 tablero_juego = tablero.init()
 while running:
@@ -23,10 +23,10 @@ while running:
             tablero.colicion(tablero_juego,event.pos)
         if event.type == pygame.KEYDOWN:
             pass
-        if event.type == pygame.USEREVENT:
-            if event.type == tick:
-                print("Ya paso un segundo")
         
+        if event.type == tick_3seg:
+            #tablero.primer_muestreo(tablero_juego)
+            pass
     # Se pinta el fondo de la ventana de blanco
     pantalla_juego.fill((255, 255, 255))
     # Se dibuja un circulo azul
@@ -40,7 +40,7 @@ while running:
     #text = font.render("HOLA MUNDO", True, (255, 0, 0))
     #pantalla_juego.blit(text,(100,100))
     # Muestra los cambios en  la pantalla
-
+    tablero.update(tablero_juego,3)
     tablero.render(tablero_juego,pantalla_juego)
     pygame.display.flip()
 

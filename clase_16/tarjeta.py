@@ -19,3 +19,16 @@ def init(nombre_imagen,nombre_imagen_hide,x,y):
     nueva_tarjeta["rect"].x = x
     nueva_tarjeta["rect"].y = y
     return nueva_tarjeta
+
+
+    '''
+    def cantidad_tarjetas_descubiertas(tarjetas: list[dict]) -> int:
+    descubiertas = filter(lambda x: x['descubierto'], tarjetas)
+    return len(descubiertas)
+    '''
+
+def cantidad_tarjetas_visibles_nodescubiertas(lista_tarjetas) ->int:
+    descubiertas = list(filter(lambda x: not x['descubierto'] and  x["visible"] , lista_tarjetas))
+    print(len(descubiertas))
+    return len(descubiertas)
+        
