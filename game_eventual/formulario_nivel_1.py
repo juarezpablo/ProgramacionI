@@ -17,13 +17,13 @@ class Formulario_level_1(Form):
        # self.lista_botones=self.lista_botones=[self.boton_pausa,self.boton_atras]
 
        # self.stage_1=Nivel(10,path_nivel_1,2,self.master_surface,active)
-
+        self.bandera_nivel=0
    
     def pausa(self,parametro):
         self.set_active(parametro)
             
     def menu(self,parametro):
-        self.set.active(parametro)
+        self.set_active(parametro)
 
 
     def evento_pausa(self,delta_ms,lista_eventos):
@@ -41,7 +41,10 @@ class Formulario_level_1(Form):
       #  self.boton_nivel_1.update(delta_ms,lista_eventos)
       #  self.boton_atras.update(delta_ms,lista_eventos)
         self.evento_pausa(delta_ms,lista_eventos)
-        if tablero_de_gestion.stage_1.active:
+        if self.bandera_nivel ==0:
+            tablero_de_gestion.stage_1.active=True
+            self.bandera_nivel=1
+        if tablero_de_gestion.stage_1.active and tablero_de_gestion.stage_1.derrota==False:
             tablero_de_gestion.stage_1.update(delta_ms,player_1.municion_list,player_1)
             
         elif tablero_de_gestion.stage_1.active==False:

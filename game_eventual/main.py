@@ -64,7 +64,7 @@ while True:
        #     form_level_1.update(delta_ms,lista_eventos,player_1)
        #    tablero_de_gestion.update(delta_ms,player_1,lista_eventos)
          #   tablero_de_gestion.draw(player_1,delta_ms)
-            tablero_de_gestion.stage_1.active=True
+            
             form_level_1.update(delta_ms,lista_eventos,player_1,tablero_de_gestion)
             form_level_1.draw(delta_ms,player_1,tablero_de_gestion)
             player_1.events(delta_ms,keys)
