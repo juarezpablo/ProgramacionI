@@ -14,17 +14,18 @@ class Player:
         '''
         self.walk_r = Auxiliar.getSurfaceFromSpriteSheet("caracters/stink/walk.png",15,1,scale=p_scale)[:12]
         '''
-
+        self.posicion_inicial_x=x
+        self.posicion_inicial_y=y
         self.stay_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER_STAY,10,flip=False,scale=p_scale)
         self.stay_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER_STAY,10,flip=True,scale=p_scale)
         self.jump_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER_JUMP,10,flip=False,scale=p_scale)
         self.jump_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER_JUMP,10,flip=True,scale=p_scale)
         self.walk_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER_WALK,8,flip=False,scale=p_scale)
         self.walk_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_PLAYER_WALK,8,flip=True,scale=p_scale)
-        self.shoot_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_IMAGE+"caracters/players/cowgirl/Shoot ({0}).png",3,flip=False,scale=p_scale,repeat_frame=2)
-        self.shoot_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_IMAGE+"caracters/players/cowgirl/Shoot ({0}).png",3,flip=True,scale=p_scale,repeat_frame=2)
-        self.knife_r = Auxiliar.getSurfaceFromSeparateFiles(PATH_IMAGE+"caracters/players/cowgirl/Melee ({0}).png",7,flip=False,scale=p_scale,repeat_frame=1)
-        self.knife_l = Auxiliar.getSurfaceFromSeparateFiles(PATH_IMAGE+"caracters/players/cowgirl/Melee ({0}).png",7,flip=True,scale=p_scale,repeat_frame=1)
+        self.shoot_r = Auxiliar.getSurfaceFromSeparateFiles("Sprites/images/images/caracters/players/cowgirl/Shoot ({0}).png",3,flip=False,scale=p_scale,repeat_frame=2)
+        self.shoot_l = Auxiliar.getSurfaceFromSeparateFiles("Sprites/images/images/caracters/players/cowgirl/Shoot ({0}).png",3,flip=True,scale=p_scale,repeat_frame=2)
+        self.knife_r = Auxiliar.getSurfaceFromSeparateFiles("Sprites/images/images/caracters/players/cowgirl/Melee ({0}).png",7,flip=False,scale=p_scale,repeat_frame=1)
+        self.knife_l = Auxiliar.getSurfaceFromSeparateFiles("Sprites/images/images/caracters/players/cowgirl/Melee ({0}).png",7,flip=True,scale=p_scale,repeat_frame=1)
 
         self.frame = 0
         self.lives = 5
@@ -78,21 +79,28 @@ class Player:
 
        # self.lives=[]
         #self.lives=self.generate_lives(5)
-        self.vidas=4    
+        self.vidas=5    
 
         self.estado_player="sano"
         self.bandera_daño=0
         self.tiempo_desde_colision=0
 
-        self.barra_de_vida=Barra_progresiva(tablero,1200,50,200,25,C_LIGHT_PINK,PATH_IMAGE+"gui/set_gui_01/Pixel_Border/Bars/Bar_Background0{0}.png",1,PATH_IMAGE+"gui/set_gui_01/Pixel_Border/Bars/Bar_Segment0{0}.png",estilo_punto=1,p_scale=1,valor_a_dibujar=self.vidas,valor_max=6,estado=1)
+        self.barra_de_vida=Barra_progresiva(tablero,1200,50,200,25,C_LIGHT_PINK,"Sprites/images/images/gui/set_gui_01/Pixel_Border/Bars/Bar_Background0{0}.png",1,"Sprites/images/images/gui/set_gui_01/Pixel_Border/Bars/Bar_Segment0{0}.png",estilo_punto=1,p_scale=1,valor_a_dibujar=self.vidas,valor_max=6,estado=1)
 
         self.tiempo_de_recarga=2000
         self.tiempo_desde_creacion=0
         self.bandera_recarga=0
         self.score=0
-        self.score_label=Caja_texto(tablero,500,0,100,50,C_NEGRO,"SCORE","Verdana",C_BLUE_2,35)
-        self.score_value=Caja_texto(tablero,650,0,100,50,C_NEGRO,self.score,"Verdana",C_BLUE_2,35)
+        self.score_label=Caja_texto(tablero,500,0,100,50,None,"SCORE","Verdana",C_BLUE_2,35)
+        self.score_value=Caja_texto(tablero,650,0,100,50,None,self.score,"Verdana",C_BLUE_2,35)
+
+        self.tiempo_de_juego=0.00
+        self.label_tiempo=Caja_texto(tablero,720,0,100,50,None,"TIME:","Verdana",C_RED,35)
+        self.value_tiempo=Caja_texto(tablero,820,0,100,50,None,self.tiempo_de_juego,"Verdana",C_RED,35)
+        self.reset=False
+    
     '''
+
     def generate_lives(self,cant):
         for i in range (cant):
             self.lives.append("coin")
@@ -131,9 +139,6 @@ class Player:
         #print("Tiempo RECARGA ENEMY {0}".format(self.tiempo_recarga_enemigos))
         self.tiempo_desde_creacion+=delta_ms
         #print("DELTA_MS {0}".format(self.tiempo_desde_colision))
-
-        
-
         if  self.bandera_recarga==0 :
             self.municion_list.append(Bala(self.rect.x,self.rect.y+(self.rect.height/3),self.direction,self.direccion_bala,estado_de_bala="disparada",speed=10,angulo_y_de_disparo=self.angulo_y_de_disparo))
             self.bandera_recarga=1
@@ -258,8 +263,28 @@ class Player:
                 #print(self.frame)
             else: 
                 self.frame = 0
- 
-    def update(self,delta_ms,plataform_list):
+        '''
+    def reset(self):
+        self.vidas=5
+        self.estado_player="sano"
+        self.tiempo_de_juego=0
+        self.rect.x=self.posicion_inicial_x
+        self.rect.y=self.posicion_inicial_y
+        self.score=0
+        
+        self.collition_rect = pygame.Rect(self.posicion_inicial_x+self.rect.width/3,self.posicion_inicial_y,self.rect.width/3,self.rect.height)
+        self.ground_collition_rect = pygame.Rect(self.collition_rect)
+        self.terreno_colision_izquierda_rect=pygame.Rect(self.rect.x,self.posicion_inicial_y+5,5,self.rect.height-5)
+        self.terreno_colision_derecha_rect=pygame.Rect(self.rect.x+self.collition_rect.width*2,self.posicion_inicial_y+5,5,self.rect.height-5)
+        self.collition_rect = pygame.Rect(self.posicion_inicial_x+self.rect.width/3,self.posicion_inicial_y,self.rect.width/3,self.rect.height)
+        '''
+
+    def update(self,delta_ms,plataform_list,tablero_de_gestion):
+        if tablero_de_gestion.stage_1.active or tablero_de_gestion.stage_2.active or tablero_de_gestion.stage_3.active:
+            self.tiempo_de_juego=self.tiempo_de_juego+(delta_ms/1000)
+            self.tiempo_de_juego=round(self.tiempo_de_juego,2)
+       
+
         self.do_movement(delta_ms,plataform_list)
         self.do_animation(delta_ms)
 
@@ -269,6 +294,8 @@ class Player:
 
         self.score_label.update(delta_ms,"SCORE")
         self.score_value.update(delta_ms,self.score)
+        self.value_tiempo.update(delta_ms,self.tiempo_de_juego)
+        self.label_tiempo.update(delta_ms,"TIME:")
 
     def descontar_vida(self,delta_ms):
         self.tiempo_danado=2500
@@ -309,7 +336,8 @@ class Player:
 
         self.score_label.draw()
         self.score_value.draw()
-
+        self.label_tiempo.draw()
+        self.value_tiempo.draw()
     def events(self,delta_ms,keys):
         self.tiempo_transcurrido += delta_ms
 
